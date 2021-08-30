@@ -9,7 +9,7 @@ namespace TP3Lab3
 {
     class Conexion
     {
-        public static MySqlConnection ConexionDB()
+        public MySqlConnection ConexionDB()
         {
             string servidor = "localhost";
             string db = "world";

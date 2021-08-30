@@ -8,6 +8,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using TP3Lab3.Controlador;
+using TP3Lab3.Modelo;
 
 namespace TP3Lab3
 {
@@ -16,9 +18,23 @@ namespace TP3Lab3
         public Form2()
         {
             InitializeComponent();
+            CargarTabla(null);
         }
 
-        private void btnGuardar_Click(object sender, EventArgs e)
+        private void btnBuscar_Click(object sender, EventArgs e)
+        {
+            string dato = txtCampo.Text;
+            CargarTabla(dato);
+        }
+
+        private void CargarTabla(string dato)
+        {
+            List<City> lista = new List<City>();
+            CtrlCity ctrlCity = new CtrlCity();
+            dataGridView1.DataSource = ctrlCity.Consulta(dato);
+        }
+
+        /*private void btnGuardar_Click(object sender, EventArgs e)
         {
             try
             {
@@ -183,6 +199,6 @@ namespace TP3Lab3
             txtCodigoPais.Text = "";
             txtDistrito.Text = "";
             txtPoblacion.Text = "";
-        }
+        }*/
     }
 }
