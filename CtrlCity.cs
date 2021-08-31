@@ -57,6 +57,82 @@ namespace TP3Lab3.Controlador
                 Console.WriteLine(ex.Message.ToString()); 
             }
             return lista;
-        }  
+        }
+
+        public bool Insertar(City datos)
+        {
+            bool bandera = false;
+
+            string sql = "INSERT INTO city " +
+                "(Name, CountryCode, District, Population) VALUES (" +
+                "'" + datos.Name + "', " +
+                "'" + datos.CountryCode + "', " +
+                "'" + datos.District + "', " +
+                "'" + datos.Population + "')";
+
+            try
+            {
+                MySqlConnection conexionDB = ConexionDB();
+                conexionDB.Open();
+                MySqlCommand comando = new MySqlCommand(sql, conexionDB);
+                comando.ExecuteNonQuery();
+                bandera = true;
+            }
+            catch (MySqlException ex)
+            {
+                Console.WriteLine(ex.Message.ToString());
+                bandera = false;
+            }
+            return bandera;
+        }
+
+        public bool Actualizar(City datos)
+        {
+            bool bandera = false;
+
+            string sql = "UPDATE city SET " +
+               "Name='" + datos.Name + "', " +
+               "CountryCode='" + datos.CountryCode + "', " +
+               "District='" + datos.District + "', " +
+               "Population='" + datos.Population + "' " +
+               "WHERE ID='" + datos.ID + "'";
+
+            try
+            {
+                MySqlConnection conexionDB = ConexionDB();
+                conexionDB.Open();
+                MySqlCommand comando = new MySqlCommand(sql, conexionDB);
+                comando.ExecuteNonQuery();
+                bandera = true;
+            }
+            catch (MySqlException ex)
+            {
+                Console.WriteLine(ex.Message.ToString());
+                bandera = false;
+            }
+            return bandera;
+        }
+
+        public bool Eliminar(int id)
+        {
+            bool bandera = false;
+
+            string sql = "DELETE FROM city WHERE ID='" + id + "'";
+
+            try
+            {
+                MySqlConnection conexionDB = ConexionDB();
+                conexionDB.Open();
+                MySqlCommand comando = new MySqlCommand(sql, conexionDB);
+                comando.ExecuteNonQuery();
+                bandera = true;
+            }
+            catch (MySqlException ex)
+            {
+                Console.WriteLine(ex.Message.ToString());
+                bandera = false;
+            }
+            return bandera;
+        }
     }
 }

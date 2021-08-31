@@ -34,6 +34,88 @@ namespace TP3Lab3
             dataGridView1.DataSource = ctrlCity.Consulta(dato);
         }
 
+        private void btnGuardar_Click(object sender, EventArgs e)
+        {
+            bool bandera = false;
+
+            City city = new City();
+            city.Name = txtName.Text;
+            city.CountryCode = txtCountryCode.Text;
+            city.District = txtDistrict.Text;
+            city.Population = int.Parse(txtPopulation.Text);
+
+            CtrlCity ctrlCity = new CtrlCity();
+
+            if (txtID.Text != "")
+            {
+                city.ID = int.Parse(txtID.Text);
+                bandera = ctrlCity.Actualizar(city);
+            }
+            else
+            {
+                bandera = ctrlCity.Insertar(city);
+            }
+
+            if (bandera)
+            {
+                MessageBox.Show("Registro Guardado");
+                Limpiar();
+                CargarTabla(null);
+            }
+        }
+
+        private void Limpiar()
+        {
+            txtName.Text = "";
+            txtCountryCode.Text = "";
+            txtDistrict.Text = "";
+            txtPopulation.Text = "";
+            txtID.Text = "";
+        }
+
+        private void btnModificar_Click(object sender, EventArgs e)
+        {
+            txtID.Text = dataGridView1.CurrentRow.Cells[0].Value.ToString();
+            txtName.Text = dataGridView1.CurrentRow.Cells[1].Value.ToString();
+            txtCountryCode.Text = dataGridView1.CurrentRow.Cells[2].Value.ToString();
+            txtDistrict.Text = dataGridView1.CurrentRow.Cells[3].Value.ToString();
+            txtPopulation.Text = dataGridView1.CurrentRow.Cells[4].Value.ToString();
+        }
+
+        private void btnEliminar_Click(object sender, EventArgs e)
+        {
+            DialogResult resultado =
+                MessageBox.Show("Seguro que desea eliminar el registro?",
+                                "Salir",
+                                MessageBoxButtons.YesNoCancel);
+            if (resultado == DialogResult.Yes)
+            {
+                bool bandera = false;
+                int id = 
+                    int.Parse(
+                        dataGridView1.CurrentRow.Cells[0].Value
+                        .ToString());
+                CtrlCity ctrlCity = new CtrlCity();
+                bandera = ctrlCity.Eliminar(id);
+
+                if (bandera)
+                {
+                    MessageBox.Show("Registro Guardado");
+                    Limpiar();
+                    CargarTabla(null);
+                }
+                else
+                {
+                    MessageBox.Show("Guardado falló");
+                }
+            }
+        }
+
+        private void btnLimpiar_Click(object sender, EventArgs e)
+        {
+            Limpiar();
+        }
+
         /*private void btnGuardar_Click(object sender, EventArgs e)
         {
             try
